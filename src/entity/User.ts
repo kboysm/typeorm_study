@@ -15,4 +15,15 @@ export class User extends Model {
 
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
+
+  constructor() {
+    super();
+  }
+  static signup(name: string, email: string, role: string): User {
+    const user = new User();
+    user.name = name;
+    user.email = email;
+    user.role = role;
+    return user;
+  }
 }

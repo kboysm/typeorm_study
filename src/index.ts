@@ -4,9 +4,11 @@ import { User } from "./entity/User";
 import { Post } from "./entity/Post";
 import express, { Request, Response } from "express";
 import routes from "./routes";
+import { createExpressServer } from "routing-controllers";
+import { UserController } from "./controller/user/UserController";
 const app = express();
 app.use(express.json());
-app.use("/", routes);
+// app.use("/", routes);
 // // CREATE
 // app.post("/users", async (req: Request, res: Response) => {
 //   const { name, email, role } = req.body;
@@ -88,6 +90,9 @@ app.use("/", routes);
 
 createConnection()
   .then(async (connection) => {
+    const app = createExpressServer({
+      controllers: [UserController], // we specify controllers we want to use
+    });
     app.listen(3000, () => {
       console.log("server start");
     });

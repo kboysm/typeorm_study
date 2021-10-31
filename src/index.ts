@@ -8,7 +8,7 @@ import { createExpressServer } from "routing-controllers";
 import { UserController } from "./controller/user/UserController";
 const app = express();
 app.use(express.json());
-// app.use("/", routes);
+app.use("/", routes);
 // // CREATE
 // app.post("/users", async (req: Request, res: Response) => {
 //   const { name, email, role } = req.body;

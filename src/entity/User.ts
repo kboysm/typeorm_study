@@ -1,29 +1,18 @@
-import { Entity, Column, OneToMany } from "typeorm";
-import Model from "./Model";
-import { Post } from "./Post";
+import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
 
-@Entity("users")
-export class User extends Model {
-  @Column()
-  name: string;
+@Entity()
+export class User {
 
-  @Column()
-  email: string;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-  @Column()
-  role: string;
+    @Column()
+    firstName: string;
 
-  @OneToMany(() => Post, (post) => post.user)
-  posts: Post[];
+    @Column()
+    lastName: string;
 
-  constructor() {
-    super();
-  }
-  static signup(name: string, email: string, role: string): User {
-    const user = new User();
-    user.name = name;
-    user.email = email;
-    user.role = role;
-    return user;
-  }
+    @Column()
+    age: number;
+
 }

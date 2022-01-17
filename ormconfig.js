@@ -6,7 +6,7 @@ module.exports = {
   username: "root",
   password: "1234",
   database: "test",
-  synchronize: true, // 데이터 베이스 동기화 옵션
+  synchronize: false, // 데이터 베이스 동기화 옵션
   connectTimeout: 3000,
   logging: true, // 데이터베이스 로그를 터미널에 출력
   timezone: "Z",

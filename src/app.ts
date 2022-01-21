@@ -7,10 +7,9 @@ import {
   useContainer as routingContainer,
   useExpressServer,
 } from "routing-controllers";
-// import { routingControllerOptions } from "./utils/RoutingConfig";
+import { routingControllerOptions } from "./utils/RoutingConfig";
 // import { useSwagger } from "./utils/swagger";
 import path from "path";
-import { User } from "./entity/User";
 
 export class App {
   public app: express.Application;
@@ -25,10 +24,7 @@ export class App {
   // DB 셋팅
   private async setDatabase(): Promise<void> {
     try {
-      await createConnection().then(async (connection) => {
-        const testData = new User().getEntity({ email: "asdasd" });
-        console.log(testData);
-      });
+      await createConnection().then(async (connection) => {});
     } catch (error) {
       console.log(error);
     }
@@ -54,7 +50,7 @@ export class App {
     try {
       routingContainer(Container);
       ormContainer(Container);
-      // useExpressServer(this.app, routingControllerOptions);
+      useExpressServer(this.app, routingControllerOptions);
       // useSwagger(this.app);
       const port = this.getHttpPort();
 

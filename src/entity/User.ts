@@ -1,17 +1,26 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
-import { BaseEntity } from "./BaseEntity";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  JoinColumn,
+} from "typeorm";
+import { UserInfo } from "./UserInfo";
 
 @Entity("user")
-export class User extends BaseEntity {
+export class User {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Column({ type: "varchar", length: 100 })
+  @Column({ type: "varchar", length: 100, unique: true })
   email: string;
-  @Column({ type: "varchar", length: 200 })
+  @Column({ type: "varchar", length: 200, select: false })
   password: string;
-  @Column({ type: "varchar", length: 40 })
-  name: string;
-  @Column()
-  age: number;
+  @Column({ type: "int", default: null })
+  userInfoId: number;
+
+  @OneToOne(() => UserInfo, (userInfo) => userInfo.id, {
+    cascade: true,
+  })
+  @JoinColumn({ name: "userInfoId" })
+  userInfo: UserInfo;
 }

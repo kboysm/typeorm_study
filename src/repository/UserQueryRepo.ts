@@ -9,8 +9,8 @@ import { PageReq } from "../api/PageReq";
 export class UserQueryRepo {
   findAll(param: PageReq) {
     return createQueryBuilder()
-      .select("becon_admin")
-      .from(User, "becon_admin")
+      .select("user")
+      .from(User, "user")
       .skip(param.getOffset())
       .take(param.getLimit())
       .getManyAndCount();
@@ -18,40 +18,32 @@ export class UserQueryRepo {
 
   findOne(id: number) {
     return createQueryBuilder()
-      .select("becon_admin")
-      .from(User, "becon_admin")
+      .select("user")
+      .from(User, "user")
       .where("id = :id", { id })
       .getOne();
   }
-
+  // .addSelect("user.password")가 있다는건 비밀번호 비교용 함수, 외부노출 api에 사용금지
   findByEmail(email: string) {
     return createQueryBuilder()
-      .select("becon_admin")
-      .addSelect("becon_admin.password")
-      .from(User, "becon_admin")
+      .select("user")
+      .addSelect("user.password")
+      .from(User, "user")
       .where("email = :email", { email })
       .getOne();
   }
 
   // create(paramObj: UserDto) {
-  //   paramObj.password = hash(paramObj.password);
-  //   return createQueryBuilder()
-  //     .insert()
-  //     .into(User)
-  //     .values(paramObj.getUpdateData())
-  //     .execute();
+  //   return createQueryBuilder().insert().into(User).values(paramObj).execute();
   // }
 
-  // update(paramObj: UserDto, id: number) {
-  //   if (paramObj.password) {
-  //     paramObj.password = hash(paramObj.password);
-  //   }
-  //   return createQueryBuilder()
-  //     .update(User)
-  //     .set(paramObj)
-  //     .where("id = :id", { id })
-  //     .execute();
-  // }
+  update(paramObj: UserDto, id: number) {
+    return createQueryBuilder()
+      .update(User)
+      .set(paramObj)
+      .where("id = :id", { id })
+      .execute();
+  }
 
   delete(id: number) {
     return createQueryBuilder()

@@ -1,4 +1,4 @@
 import { User } from "./User";
-import { Board } from "./Board";
+import { UserInfo } from "./UserInfo";
 
-export { User, Board };
+export { User, UserInfo };

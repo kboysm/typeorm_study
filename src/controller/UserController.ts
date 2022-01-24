@@ -39,27 +39,6 @@ export class UserController {
     }
   }
 
-  // @Get("/search")
-  // public async search(
-  //   @QueryParams() param: ContactSearchReq,
-  //   @Res() res: Response
-  // ) {
-  //   const validationResult = await new CustomValidation(
-  //     param
-  //   ).checkValidation();
-  //   if (validationResult) return validationResult;
-
-  //   try {
-  //     return await this.userService.search(param);
-  //   } catch (err) {
-  //     if (err instanceof QueryFailedError) {
-  //       console.log("Instance of QueryFailedError!");
-  //       return new PageResObj({}, err.message, true);
-  //     }
-  //     return new PageResObj({}, err.message, true);
-  //   }
-  // }
-
   @Get("/findone/:id")
   public async getOne(@Param("id") id: number, @Res() res: Response) {
     const validationResult = new IdValidation(id, "number");

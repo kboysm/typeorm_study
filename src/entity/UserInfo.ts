@@ -5,7 +5,6 @@ import {
   OneToOne,
   JoinColumn,
 } from "typeorm";
-import { User } from "./User";
 
 @Entity("user_info")
 export class UserInfo {
@@ -20,14 +19,4 @@ export class UserInfo {
 
   @Column()
   age: number;
-
-  // @Column({ type: "varchar", default: null })
-  // user_id: string;
-
-  // @OneToOne(() => User, (user) => user.id, {
-  //   cascade: true,
-
-  // })
-  // @JoinColumn({ name: "user_id"})
-  // user: User;
 }

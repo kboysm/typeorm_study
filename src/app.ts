@@ -8,7 +8,7 @@ import {
   useExpressServer,
 } from "routing-controllers";
 import { routingControllerOptions } from "./utils/RoutingConfig";
-// import { useSwagger } from "./utils/swagger";
+import { useSwagger } from "./utils/swagger";
 import path from "path";
 
 export class App {
@@ -51,7 +51,7 @@ export class App {
       routingContainer(Container);
       ormContainer(Container);
       useExpressServer(this.app, routingControllerOptions);
-      // useSwagger(this.app);
+      useSwagger(this.app);
       const port = this.getHttpPort();
 
       this.app.listen(port, () => {

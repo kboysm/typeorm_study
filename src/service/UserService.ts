@@ -25,20 +25,8 @@ export class UserService {
     );
   }
 
-  // async search(param: AdminSearchReq): Promise<PageResList<User>> {
-  //   const result = await this.userQueryRepo.search(param);
-  //   return new PageResList<User>(
-  //     result[1],
-  //     param.limit,
-  //     result[0].map((el: User) => {
-  //       return el;
-  //     }),
-  //     "User 목록을 찾는데 성공했습니다"
-  //   );
-  // }
-
-  async findOne(id: number): Promise<PageResObj<User>> {
-    const result: User = await this.userQueryRepo.findOne(id);
+  async findOne(id: number): Promise<PageResObj<User | {}>> {
+    const result = await this.userQueryRepo.findOne(id);
     return new PageResObj(result, "User를 찾는데 성공했습니다.");
   }
 
@@ -89,8 +77,6 @@ export class UserService {
       { id },
       { relations: ["userInfo"] }
     );
-    // await this.userQueryRepo.update(paramObj, id);
-    // const result = await this.userQueryRepo.findOne(id);
     return new PageResObj(result, "User 정보 수정에 성공했습니다.");
   }
 

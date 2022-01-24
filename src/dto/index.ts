@@ -27,6 +27,10 @@ class UserInfoDto {
   @IsInt()
   age: number;
 }
+class LoginDto {
+  email: string;
+  password: string;
+}
 
 class UserDto {
   @IsEmail()
@@ -75,4 +79,4 @@ class UserDto {
   }
 }
 
-export { UserDto };
+export { UserDto, LoginDto };

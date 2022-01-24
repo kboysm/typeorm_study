@@ -1,0 +1,91 @@
+tags:
+  - name: User
+    description: User API
+
+paths:
+  /user/findall:
+    get:
+      tags:
+        - User
+      summary: Find All User
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          description: rowPerPage
+          schema:
+            type: integer
+
+        - name: pageNo
+          in: query
+          required: false
+          description: pageNumber
+          schema:
+            type: integer
+
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                    description: error 체크
+                    example: false
+                  totalCount:
+                    type: integer
+                    description: 전체 User의 수
+                    example: 10
+                  totalPage:
+                    type: integer
+                    description: 전체 페이지, 의미 없는 totalPage는 음수처리
+                    example: 1
+                  msg:
+                    type: string
+                    description: 메시지
+                    example: User 목록을 찾는데 성공했습니다.
+                  items:
+                    type: array
+                    items:
+                      properties:
+                        id:
+                          type: integer
+                          description: user id
+                          example: 1
+                        email:
+                          type: string
+                          description: 노출 우선 순위
+                          example: test@google.com
+                        userInfoId:
+                          type: string
+                          description: userInfo id
+                          example: 1
+                        userInfo:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              description: user info id
+                              example: 1
+                            address:
+                              type: string
+                              description: user address
+                              example: 대한민국 서울~
+                            name:
+                              type: string
+                              description: user name
+                              example: tom
+                            age:
+                              type: int
+                              description: user age
+                              example: 25
+
+        500:
+          description: "Server Error"
+
+schemes:
+  - https
+  - http

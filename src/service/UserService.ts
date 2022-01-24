@@ -16,11 +16,11 @@ export class UserService {
   ) {}
 
   async findAll(param: PageReq): Promise<PageResList<User>> {
-    const result: [User[], number] = await this.userQueryRepo.findAll(param);
+    const result = await this.userQueryRepo.findAll(param);
     return new PageResList<User>(
       result[1],
       param.limit,
-      result[0],
+      result[0].map((el: User) => el),
       "User 목록을 찾는데 성공했습니다"
     );
   }
@@ -47,16 +47,13 @@ export class UserService {
     paramObj: UserDto,
     @TransactionManager() manager: EntityManager
   ): Promise<PageResObj<User>> {
-    const createedUser = await manager.insert(User, paramObj.getUser);
     const createedUserInfo = await manager.insert(UserInfo, {
       ...paramObj.userInfo,
-      user_id: createedUser.identifiers[0].id,
     });
-    await manager.update(
-      User,
-      { id: createedUser.identifiers[0].id },
-      { userInfoId: createedUserInfo.identifiers[0].id }
-    );
+    const createedUser = await manager.insert(User, {
+      ...paramObj.getUser,
+      userInfoId: createedUserInfo.identifiers[0].id,
+    });
     const result: User = await manager.findOne(
       User,
       { id: createedUser.identifiers[0].id },
@@ -65,9 +62,35 @@ export class UserService {
     return new PageResObj(result, "User 생성에 성공했습니다.");
   }
 
-  async update(paramObj: UserDto, id: number): Promise<PageResObj<User>> {
-    await this.userQueryRepo.update(paramObj, id);
-    const result = await this.userQueryRepo.findOne(id);
+  @Transaction()
+  async update(
+    paramObj: UserDto,
+    id: number,
+    @TransactionManager() manager: EntityManager
+  ): Promise<PageResObj<User>> {
+    const oldUser: User = await manager.findOne(
+      User,
+      { id },
+      { relations: ["userInfo"] }
+    );
+
+    if (paramObj.checkExistUser) {
+      await manager.update(User, { id }, { ...paramObj.getUpdatedUser() });
+    }
+    if (paramObj.checkExistUserInfo) {
+      await manager.update(
+        UserInfo,
+        { id: oldUser.userInfoId },
+        { ...paramObj.getUpdatedUserInfo() }
+      );
+    }
+    const result: User = await manager.findOne(
+      User,
+      { id },
+      { relations: ["userInfo"] }
+    );
+    // await this.userQueryRepo.update(paramObj, id);
+    // const result = await this.userQueryRepo.findOne(id);
     return new PageResObj(result, "User 정보 수정에 성공했습니다.");
   }
 

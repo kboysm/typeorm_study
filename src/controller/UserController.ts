@@ -110,7 +110,7 @@ export class UserController {
       return idValidationResult.getRes();
     }
     try {
-      return await this.userService.update(updateDto, id);
+      return await this.userService.update(updateDto, id, null);
     } catch (err) {
       if (err instanceof QueryFailedError) {
         console.log("Instance of QueryFailedError!");

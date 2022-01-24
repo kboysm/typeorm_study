@@ -19,7 +19,7 @@ export class User {
   userInfoId: number;
 
   @OneToOne(() => UserInfo, (userInfo) => userInfo.id, {
-    cascade: true,
+    onDelete: "CASCADE",
   })
   @JoinColumn({ name: "userInfoId" })
   userInfo: UserInfo;

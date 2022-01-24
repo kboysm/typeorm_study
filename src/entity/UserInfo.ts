@@ -21,12 +21,13 @@ export class UserInfo {
   @Column()
   age: number;
 
-  @Column({ type: "varchar", default: null })
-  user_id: string;
+  // @Column({ type: "varchar", default: null })
+  // user_id: string;
 
-  @OneToOne(() => User, (user) => user.id, {
-    cascade: true,
-  })
-  @JoinColumn({ name: "user_id" })
-  user: User;
+  // @OneToOne(() => User, (user) => user.id, {
+  //   cascade: true,
+
+  // })
+  // @JoinColumn({ name: "user_id"})
+  // user: User;
 }

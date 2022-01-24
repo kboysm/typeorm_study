@@ -8,12 +8,15 @@ import { PageReq } from "../api/PageReq";
 @EntityRepository(User)
 export class UserQueryRepo {
   findAll(param: PageReq) {
-    return createQueryBuilder()
-      .select("user")
-      .from(User, "user")
-      .skip(param.getOffset())
-      .take(param.getLimit())
-      .getManyAndCount();
+    return (
+      createQueryBuilder("user")
+        .leftJoinAndSelect("User.userInfo", "info")
+        // .select("user")
+        // .from(User, "user")
+        .skip(param.getOffset())
+        .take(param.getLimit())
+        .getManyAndCount()
+    );
   }
 
   findOne(id: number) {
@@ -37,13 +40,13 @@ export class UserQueryRepo {
   //   return createQueryBuilder().insert().into(User).values(paramObj).execute();
   // }
 
-  update(paramObj: UserDto, id: number) {
-    return createQueryBuilder()
-      .update(User)
-      .set(paramObj)
-      .where("id = :id", { id })
-      .execute();
-  }
+  // update(paramObj: UserDto, id: number) {
+  //   return createQueryBuilder()
+  //     .update(User)
+  //     .set(paramObj)
+  //     .where("id = :id", { id })
+  //     .execute();
+  // }
 
   delete(id: number) {
     return createQueryBuilder()

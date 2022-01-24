@@ -39,11 +39,39 @@ class UserDto {
   @Type(() => UserInfoDto)
   userInfo: UserInfoDto;
 
+  // createService
   get getUser() {
     return {
       email: this.email,
       password: this.password,
     };
+  }
+
+  get checkExistUser() {
+    return this.email || this.password;
+  }
+  get checkExistUserInfo() {
+    return this.userInfo;
+  }
+
+  // updateService - User
+  getUpdatedUser() {
+    const userKey = ["email", "password"];
+    const result = {};
+    userKey.forEach((key) => {
+      if (this[key]) result[key] = this[key];
+    });
+    return result;
+  }
+
+  // updateServuce - UserInfo
+  getUpdatedUserInfo() {
+    const userInfoKey = ["address", "name", "age"];
+    const result = {};
+    userInfoKey.forEach((key) => {
+      if (this?.userInfo[key]) result[key] = this?.userInfo[key];
+    });
+    return result;
   }
 }
 
